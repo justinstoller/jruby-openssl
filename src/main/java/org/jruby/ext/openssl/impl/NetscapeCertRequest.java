@@ -123,7 +123,7 @@ public class NetscapeCertRequest // extends ASN1Object
             this.content = new DERBitString(pkac);
 
             final SubjectPublicKeyInfo pubKeyInfo =
-                new SubjectPublicKeyInfo((ASN1Sequence) pkac.getObjectAt(0));
+                SubjectPublicKeyInfo.getIntance(pkac.getObjectAt(0));
 
             encodedKeySpec = new X509EncodedKeySpec( new DERBitString(pubKeyInfo).getBytes() );
 

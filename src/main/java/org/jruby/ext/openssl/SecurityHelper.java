@@ -85,7 +85,6 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.DSAParameters;
 import org.bouncycastle.crypto.params.DSAPublicKeyParameters;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
-import org.bouncycastle.jce.provider.X509CRLObject;
 import org.bouncycastle.jcajce.provider.asymmetric.util.ECUtil;
 import org.bouncycastle.operator.ContentVerifierProvider;
 import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
@@ -583,7 +582,7 @@ public abstract class SecurityHelper {
     static boolean verify(final X509CRL crl, final PublicKey publicKey, final boolean silent)
         throws NoSuchAlgorithmException, CRLException, InvalidKeyException, SignatureException {
 
-        if ( crl instanceof X509CRLObject ) {
+        if ( crl instanceof X509CRLHolder ) {
             final CertificateList crlList = (CertificateList) getCertificateList(crl);
             final AlgorithmIdentifier tbsSignatureId = crlList.getTBSCertList().getSignature();
             if ( ! crlList.getSignatureAlgorithm().equals(tbsSignatureId) ) {
@@ -644,9 +643,9 @@ public abstract class SecurityHelper {
         }
     }
 
-    private static Object getCertificateList(final Object crl) { // X509CRLObject
+    private static Object getCertificateList(final Object crl) { // X509CRLHolder
         try { // private CertificateList c;
-            final Field cField = X509CRLObject.class.getDeclaredField("c");
+            final Field cField = X509CRLHolder.class.getDeclaredField("c");
             cField.setAccessible(true);
             return cField.get(crl);
         }

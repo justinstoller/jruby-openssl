@@ -1284,9 +1284,9 @@ public class PEMInputOutput {
         //}
 
         String realName = Algorithm.getRealName(algorithm);
-        int[] lengths = Algorithm.osslKeyIvLength(algorithm);
-        int keyLen = lengths[0];
-        int ivLen = lengths[1];
+        Algorithm algo = Algorithm.osslToJava(algorithm);
+        int keyLen = algo.getKeyLength();
+        int ivLen = algo.getIvLength();
         if (iv.length != ivLen) {
             throw new IOException("Illegal IV length");
         }

@@ -37,8 +37,6 @@ import javax.security.auth.x500.X500Principal;
 import org.bouncycastle.asn1.ASN1Encoding;
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.jce.X509Principal;
-import org.bouncycastle.jce.provider.X509CertificateObject;
 
 import org.jruby.ext.openssl.SecurityHelper;
 
@@ -145,10 +143,11 @@ public class Name {
         return this.name.equals(name);
     }
 
-    @SuppressWarnings("deprecation")
     final boolean equalTo(final Principal principal) {
         // assuming "legacy" non X500Principal impl (from BC)
-        return new X509Principal(this.name).equals(principal);
+	// This assumption may no longer hold, but if it does
+	// this will provide a non-deprecated way of dealing with legacy code.
+        return this.name.equals(principal.getName());
     }
 
     public boolean equalTo(final X500Principal principal) {
@@ -162,14 +161,10 @@ public class Name {
 
     public final boolean equalToCertificateSubject(final X509AuxCertificate wrapper) {
         // on Oracle/OpenJDK internal certificates: sun.security.x509.X509CertImpl
-        // BC: class org.bouncycastle.jcajce.provider.asymmetric.x509.X509CertificateObject
+        // BC: interface java.security.cert.X509Certificate
         final X509Certificate cert = wrapper.cert;
         if ( cert == null ) return equalTo( wrapper.getSubjectX500Principal() );
 
-        if ( cert instanceof X509CertificateObject ) {
-            return equalTo( cert.getSubjectDN() );
-        }
-        // otherwise need to take the 'expensive' path :
         return equalTo( cert.getSubjectX500Principal() );
     }
 

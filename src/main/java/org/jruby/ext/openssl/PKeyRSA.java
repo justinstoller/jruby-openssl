@@ -545,7 +545,7 @@ public class PKeyRSA extends PKey {
         if ( privateKey != null ) {
             throw newRSAError(context.runtime, "illegal modification");
         }
-        rsa_d = BN.getBigInteger(value);
+        rsa_d = BN.asBigInteger(value);
         generatePrivateKeyIfParams(context);
         return value;
     }
@@ -555,7 +555,7 @@ public class PKeyRSA extends PKey {
         if ( privateKey != null ) {
             throw newRSAError(context.runtime, "illegal modification");
         }
-        rsa_p = BN.getBigInteger(value);
+        rsa_p = BN.asBigInteger(value);
         generatePrivateKeyIfParams(context);
         return value;
     }
@@ -565,7 +565,7 @@ public class PKeyRSA extends PKey {
         if ( privateKey != null ) {
             throw newRSAError(context.runtime, "illegal modification");
         }
-        rsa_q = BN.getBigInteger(value);
+        rsa_q = BN.asBigInteger(value);
         generatePrivateKeyIfParams(context);
         return value;
     }
@@ -705,7 +705,7 @@ public class PKeyRSA extends PKey {
 
     @JRubyMethod(name="e=")
     public synchronized IRubyObject set_e(final ThreadContext context, IRubyObject value) {
-        this.rsa_e = BN.getBigInteger(value);
+        this.rsa_e = BN.asBigInteger(value);
 
         if ( privateKey == null ) {
             generatePrivateKeyIfParams(context);
@@ -738,7 +738,7 @@ public class PKeyRSA extends PKey {
 
     @JRubyMethod(name="n=")
     public synchronized IRubyObject set_n(final ThreadContext context, IRubyObject value) {
-        this.rsa_n = BN.getBigInteger(value);
+        this.rsa_n = BN.asBigInteger(value);
 
         if ( privateKey == null ) {
             generatePrivateKeyIfParams(context);

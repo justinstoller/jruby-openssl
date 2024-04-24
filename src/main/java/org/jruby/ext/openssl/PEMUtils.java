@@ -56,7 +56,7 @@ import org.bouncycastle.openssl.PEMEncryptedKeyPair;
 import org.bouncycastle.openssl.PEMException;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.openssl.PEMWriter;
+import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.bouncycastle.operator.OperatorCreationException;
 
 import org.jruby.ext.openssl.impl.pem.MiscPEMGeneratorHelper;
@@ -168,7 +168,7 @@ public abstract class PEMUtils {
     public static void writePEM(final Writer writer, final Object obj,
         final String algorithm, final char[] password) throws IOException {
 
-        final PEMWriter pemWriter = new PEMWriter(writer);
+        final JcaPEMWriter pemWriter = new JcaPEMWriter(writer);
 
         final SecureRandom random = CryptoServicesRegistrar.getSecureRandom();
 

@@ -62,7 +62,6 @@ import org.bouncycastle.asn1.DLSequence;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
 import org.bouncycastle.asn1.x509.Certificate;
 import org.bouncycastle.asn1.x509.SubjectKeyIdentifier;
-import org.bouncycastle.jce.provider.X509CertificateObject;
 
 import org.jruby.ext.openssl.SecurityHelper;
 
@@ -365,9 +364,6 @@ public class X509AuxCertificate extends X509Certificate implements Cloneable {
     static boolean equalSubjects(final X509AuxCertificate cert1, final X509AuxCertificate cert2) {
         if ( cert1.cert == cert2.cert ) return true;
 
-        if ( cert1.cert instanceof X509CertificateObject && cert2.cert instanceof X509CertificateObject ) {
-            return cert1.cert.getSubjectDN().equals( cert2.cert.getSubjectDN() ); // less expensive on mem
-        }
         // otherwise need to take the 'expensive' path :
         return cert1.getSubjectX500Principal().equals( cert2.getSubjectX500Principal() );
     }

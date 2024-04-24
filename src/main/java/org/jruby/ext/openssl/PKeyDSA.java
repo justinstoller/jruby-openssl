@@ -532,7 +532,7 @@ public class PKeyDSA extends PKey {
     }
 
     private IRubyObject setKeySpecComponent(final int index, final IRubyObject value) {
-        final BigInteger val = BN.getBigInteger(value);
+        final BigInteger val = BN.asBigInteger(value);
 
         switch (index) {
             case SPEC_X: this.dsa_x = val; break;
